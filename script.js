@@ -1,10 +1,12 @@
-// Smooth scrolling for in-page links, offset for the fixed header
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener('click', (e) => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
+// Smooth scrolling with fixed-header offset
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
     e.preventDefault();
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 64, behavior: 'smooth' });
-    history.replaceState(null, '', link.getAttribute('href'));
+    const offset = id === 'top' ? 0 : 64;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+    history.replaceState(null, '', '#' + id);
   });
 });
